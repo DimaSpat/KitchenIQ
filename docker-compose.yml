@@ -7,8 +7,4 @@ services:
       - "5000:5000"
     env_file:
       - ./backend/.env
-    develop:
-      watch:
-        - path: ./backend/src
-          action: rebuild
     restart: always

@@ -10,5 +10,5 @@ func ApiRoutes(mux *http.ServeMux) {
 }
 
 func baseHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "hello over backend")
+	fmt.Fprint(w, "Hello over backend!")
 }

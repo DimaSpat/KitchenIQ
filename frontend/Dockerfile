@@ -8,18 +8,18 @@ RUN bun install
 
 COPY . .
 
-EXPOSE 5173
 
 RUN bun run build
 
-FROM oven/bun:latest
+FROM oven/bun:1.2.22-slim
 
 WORKDIR /app
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/server ./server
-COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./
+
+RUN bun install --production
 
 EXPOSE 5173
 

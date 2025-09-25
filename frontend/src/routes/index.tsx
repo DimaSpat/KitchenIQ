@@ -1,25 +1,31 @@
-import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { component$, useSignal, useTask$ } from '@builder.io/qwik';
 
 export default component$(() => {
+  const data = useSignal<string>('');
+  const error = useSignal<string>('');
+
+  useTask$(async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const text = await response.text();
+      data.value = text;
+    } catch (e) {
+      console.error(e);
+      error.value = 'Failed to fetch data from backend.';
+    }
+  });
+
   return (
     <>
-      <h1>Hi 👋</h1>
-      <div>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </div>
+      <h1>Backend Response:</h1>
+      {data.value ? (
+        <p>{data.value}</p>
+      ) : (
+        <p>{error.value || 'Loading...'}</p>
+      )}
     </>
   );
 });
-
-export const head: DocumentHead = {
-  title: "Welcome to Qwik",
-  meta: [
-    {
-      name: "description",
-      content: "Qwik site description",
-    },
-  ],
-};

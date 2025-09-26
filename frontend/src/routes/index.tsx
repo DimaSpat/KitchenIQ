@@ -1,10 +1,10 @@
-import { component$, useSignal, useTask$ } from '@builder.io/qwik';
+import { component$, useSignal, useVisibleTask$ } from '@builder.io/qwik';
 
 export default component$(() => {
   const data = useSignal<string>('');
   const error = useSignal<string>('');
 
-  useTask$(async () => {
+  useVisibleTask$(async () => {
     try {
       const response = await fetch('http://localhost:5000/api/');
       if (!response.ok) {

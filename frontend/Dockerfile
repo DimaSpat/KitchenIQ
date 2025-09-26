@@ -21,6 +21,4 @@ COPY --from=builder /app/package.json ./
 
 RUN bun install --production
 
-EXPOSE 5173
-
 CMD [ "bun", "run", "serve" ]
